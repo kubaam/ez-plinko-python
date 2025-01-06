@@ -48,6 +48,14 @@ ez-plinko-python/
 
 This project combines the excitement of classic arcade-style gaming with Python’s powerful GUI capabilities. Whether you’re a developer looking for inspiration or a gamer seeking a fun challenge, this Plinko game offers endless entertainment and learning opportunities.
 
+## **Support and Contributions** 🤝  
+
+Feel free to contribute or report bugs via GitHub. Pull requests are welcome!  
+If you appreciate this tool, you can support its development by donating here:  
+[**PayPal - Jakub Ambrus**](https://paypal.me/JakubAmbrus)  
+
+---
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
