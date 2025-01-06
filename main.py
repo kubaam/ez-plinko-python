@@ -31,7 +31,7 @@ class PlinkoGameMultiBalls:
         self.ball_counter = 0  # Unique ID counter for each ball
 
         # Canvas dimensions recalculated on resize
-        self.canvas_width = len(self.rewards) * 50 + 50
+        self.canvas_width = len(self.rewards) * 50 + 175
         self.canvas_height = self.rows * self.row_height + 60
 
         # ------------------- GUI Setup -------------------
