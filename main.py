@@ -22,7 +22,6 @@ canvas_height = rows * row_height + 25  # Canvas height
 
 
 def start_game():
-    """Starts the game with the entered balance."""
     global balance
     try:
         balance = float(balance_entry.get())
@@ -33,7 +32,6 @@ def start_game():
 
 
 def update_ball_price():
-    """Updates the ball price."""
     global ball_price
     try:
         ball_price = float(ball_price_entry.get())
@@ -43,7 +41,6 @@ def update_ball_price():
 
 
 def drop_ball():
-    """Drops a new ball."""
     if balance < ball_price:
         balance_label.config(text="Insufficient balance!")
         return
@@ -52,39 +49,35 @@ def drop_ball():
 
 
 def simulate_ball():
-    """Simulates the ball falling through the Plinko board."""
     global balance, ball_price, ball_id
-    balance -= ball_price  # Deduct ball price from balance
-    ball_x = canvas_width // 2  # Start at the center of the canvas
-    ball_y = row_height // 2 - 10  # Slightly above the first obstacle
+    balance -= ball_price
+    ball_x = canvas_width // 2
+    ball_y = row_height // 2 - 10
     velocity_x = 0
     velocity_y = 0
-    gravity = 0.2  # Slow gravity for smooth falling
-    has_hit_peak = False  # Tracks if the ball has hit the peak obstacle
+    gravity = 0.2
+    has_hit_peak = False
 
-    # Unique tag for each ball
     ball_tag = f"ball_{ball_id}"
     ball_id += 1
 
     while ball_y < rows * row_height:
-        if not has_hit_peak and ball_y >= obstacles[0][1] - 5:  # Hit the first obstacle
+        if not has_hit_peak and ball_y >= obstacles[0][1] - 5:
             has_hit_peak = True
-            velocity_x = random.choice([-1, 1]) * 1.5  # Slight nudge left or right
+            velocity_x = random.choice([-1, 1]) * 1.5
             velocity_y = gravity
         else:
-            velocity_y += gravity  # Apply gravity
+            velocity_y += gravity
 
-            # Increase chances of falling toward the center
             move_choice = random.choices(
-                population=[-1, 0, 1],  # Left, center, right
-                weights=[1, 5, 1],  # Higher chance to move straight
+                population=[-1, 0, 1],
+                weights=[1, 5, 1],
                 k=1
             )[0]
             velocity_x += move_choice * 0.5
             ball_x += velocity_x
             ball_y += velocity_y
 
-            # Boundary collision
             if ball_x < 10:
                 ball_x = 10
                 velocity_x = abs(velocity_x) * 0.8
@@ -92,7 +85,6 @@ def simulate_ball():
                 ball_x = canvas_width - 10
                 velocity_x = -abs(velocity_x) * 0.8
 
-            # Obstacle collision
             for i, (ox, oy) in enumerate(obstacles):
                 distance = math.sqrt((ox - ball_x) ** 2 + (oy - ball_y) ** 2)
                 if distance < 6:
@@ -100,23 +92,21 @@ def simulate_ball():
                     angle = math.atan2(ball_y - oy, ball_x - ox)
                     ball_x += math.cos(angle) * overlap
                     ball_y += math.sin(angle) * overlap
-                    if i == 0:  # First obstacle special rule
+                    if i == 0:
                         velocity_y = gravity
                         velocity_x = random.choice([-1, 1]) * 1.5
                     else:
                         velocity_x += math.cos(angle) * 1.2
                         velocity_y = -abs(math.sin(angle) * velocity_y * 0.8)
 
-        # Update ball position
         canvas.delete(ball_tag)
         canvas.create_oval(
             ball_x - 5, ball_y - 5, ball_x + 5, ball_y + 5,
-            fill="#FF5733", outline="#C70039", width=1, tags=ball_tag
+            fill="#FF6F61", outline="#FF3D00", width=1, tags=ball_tag
         )
         canvas.update()
         time.sleep(0.02)
 
-    # Determine landing slot
     slot_index = int(ball_x // slot_width)
     if 0 <= slot_index < len(rewards):
         winnings = rewards[slot_index] * ball_price
@@ -128,7 +118,6 @@ def simulate_ball():
 
 
 def draw_pyramid():
-    """Draws the Plinko board pyramid of obstacles."""
     global obstacles
     obstacles = []
 
@@ -138,28 +127,26 @@ def draw_pyramid():
             y = row * row_height + row_height // 2
             obstacles.append((x, y))
             canvas.create_oval(
-                x - 4, y - 4, x + 4, y + 4, fill="#3498DB", outline="#1F618D", width=1, tags="obstacle"
+                x - 4, y - 4, x + 4, y + 4, fill="#00C9FF", outline="#00A5E0", width=1, tags="obstacle"
             )
 
 
 def update_slots():
-    """Updates and redraws the reward slots."""
     canvas.delete("slots")
     for i, multiplier in enumerate(rewards):
         slot_x_start = i * (canvas_width / len(rewards))
         slot_x_end = (i + 1) * (canvas_width / len(rewards))
         canvas.create_rectangle(
             slot_x_start, rows * row_height, slot_x_end, rows * row_height + 20,
-            fill="#2ECC71", outline="#27AE60", tags="slots"
+            fill="#0ACF83", outline="#0ACF83", tags="slots"
         )
         canvas.create_text(
             (slot_x_start + slot_x_end) / 2, rows * row_height + 10,
-            text=f"x{multiplier:.2f}", fill="white", font=("Arial", 8, "bold"), tags="slots"
+            text=f"x{multiplier:.2f}", fill="white", font=("Arial", 9, "bold"), tags="slots"
         )
 
 
 def resize(event):
-    """Adjusts canvas size dynamically."""
     global canvas_width, canvas_height
     canvas_width = event.width
     canvas_height = event.height
@@ -172,35 +159,37 @@ def resize(event):
 # GUI Setup
 root = tk.Tk()
 root.title("EZ Plinko Python")
+root.configure(bg="#1E1E1E")
 
-settings_frame = tk.Frame(root, bg="#F4F6F7")
+settings_frame = tk.Frame(root, bg="#1E1E1E")
 settings_frame.pack(pady=10)
 
-tk.Label(settings_frame, text="Starting Balance ($):", bg="#F4F6F7", font=("Arial", 10)).grid(row=0, column=0, padx=5)
-balance_entry = tk.Entry(settings_frame, font=("Arial", 10))
+tk.Label(settings_frame, text="Starting Balance ($):", bg="#1E1E1E", fg="#FFFFFF", font=("Arial", 10)).grid(row=0, column=0, padx=5)
+balance_entry = tk.Entry(settings_frame, font=("Arial", 10), bg="#333333", fg="#FFFFFF", insertbackground="#FFFFFF")
 balance_entry.grid(row=0, column=1, padx=5)
 
-tk.Label(settings_frame, text="Ball Price ($):", bg="#F4F6F7", font=("Arial", 10)).grid(row=1, column=0, padx=5)
-ball_price_entry = tk.Entry(settings_frame, font=("Arial", 10))
+tk.Label(settings_frame, text="Ball Price ($):", bg="#1E1E1E", fg="#FFFFFF", font=("Arial", 10)).grid(row=1, column=0, padx=5)
+ball_price_entry = tk.Entry(settings_frame, font=("Arial", 10), bg="#333333", fg="#FFFFFF", insertbackground="#FFFFFF")
 ball_price_entry.insert(0, str(ball_price))
 ball_price_entry.grid(row=1, column=1, padx=5)
-update_button = tk.Button(settings_frame, text="Update Price", command=update_ball_price, bg="#2980B9", fg="white", font=("Arial", 10, "bold"))
+
+update_button = tk.Button(settings_frame, text="Update Price", command=update_ball_price, bg="#0ACF83", fg="#1E1E1E", font=("Arial", 10, "bold"))
 update_button.grid(row=1, column=2, padx=5)
 
-start_button = tk.Button(settings_frame, text="Start Game", command=start_game, bg="#27AE60", fg="white", font=("Arial", 10, "bold"))
+start_button = tk.Button(settings_frame, text="Start Game", command=start_game, bg="#3498DB", fg="#FFFFFF", font=("Arial", 10, "bold"))
 start_button.grid(row=2, columnspan=3, pady=10)
 
-balance_label = tk.Label(root, text=f"Balance: ${balance:.2f}", bg="#F4F6F7", font=("Arial", 12, "bold"))
+balance_label = tk.Label(root, text=f"Balance: ${balance:.2f}", bg="#1E1E1E", fg="#FFFFFF", font=("Arial", 12, "bold"))
 balance_label.pack(pady=5)
 
-ball_price_label = tk.Label(root, text=f"Ball Price: ${ball_price:.2f}", bg="#F4F6F7", font=("Arial", 12, "bold"))
+ball_price_label = tk.Label(root, text=f"Ball Price: ${ball_price:.2f}", bg="#1E1E1E", fg="#FFFFFF", font=("Arial", 12, "bold"))
 ball_price_label.pack(pady=5)
 
-canvas = tk.Canvas(root, width=canvas_width, height=canvas_height, bg="#F8F9F9", bd=0, highlightthickness=0)
+canvas = tk.Canvas(root, width=canvas_width, height=canvas_height, bg="#282828", bd=0, highlightthickness=0)
 canvas.pack(fill=tk.BOTH, expand=True)
 canvas.bind("<Configure>", resize)
 
-drop_button = tk.Button(root, text="Drop Ball", command=drop_ball, bg="#3498DB", fg="white", font=("Arial", 10, "bold"), state=tk.DISABLED)
+drop_button = tk.Button(root, text="Drop Ball", command=drop_ball, bg="#FF6F61", fg="#FFFFFF", font=("Arial", 10, "bold"), state=tk.DISABLED)
 drop_button.pack(pady=10)
 
 draw_pyramid()
