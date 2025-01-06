@@ -17,7 +17,7 @@ Ensure you have Python 3 installed on your system. This program uses the standar
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/plinko-enhanced.git
+   git clone https://github.com/kubaam/ez-plinko-python.git
    cd plinko-enhanced
    ```
 
