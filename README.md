@@ -24,7 +24,7 @@ Get started easily with Python 3 installed on your system. No additional depende
 
 2. Run the game script:
    ```bash
-   python plinko.py
+   python main.py
    ```
 
 ## How to Play
