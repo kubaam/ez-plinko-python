@@ -171,7 +171,7 @@ def resize(event):
 
 # GUI Setup
 root = tk.Tk()
-root.title("Plinko - Enhanced Version")
+root.title("EZ Plinko Python")
 
 settings_frame = tk.Frame(root, bg="#F4F6F7")
 settings_frame.pack(pady=10)
