@@ -26,13 +26,13 @@ Are you ready to **redefine** your Python GUI game? Meet **Multiball Python Plin
 ## **🚀 Get Started in 3 Simple Steps!**  
 1. **Clone this repository**:  
    ```bash
-   git clone https://github.com/your-username/Multiball-Plinko.git
-   cd Multiball-Plinko
+   git clone https://github.com/kubaam/ez-plinko-python.git
+   cd ez-plinko-python
    ```  
 2. **Ensure Python 3.x** is installed with `tkinter` (it’s included in most distributions!).  
 3. **Run the game**:  
    ```bash
-   python plinko_multi.py
+   python main.py
    ```  
 
 🎉 You’re all set! Watch the balls bounce, rack up scores, and enjoy the show!  
