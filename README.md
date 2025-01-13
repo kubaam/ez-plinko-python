@@ -73,6 +73,15 @@ This app is proof that Python can do way more than crunch numbers—it can creat
 
 ---
 
+
+## **Support and Contributions** 🤝  
+
+Feel free to contribute or report bugs via GitHub. Pull requests are welcome!  
+If you appreciate this tool, you can support its development by donating here:  
+[**PayPal - Jakub Ambrus**](https://paypal.me/JakubAmbrus)  
+
+---
+
 ## **📋 License**  
 This project is open-source under the **MIT License**—feel free to customize, distribute, and share your creations while giving credit to the original repo.  
 
